@@ -38,6 +38,7 @@ def b_click(b):
     pass
 
 
+board = start_game(size, mines)
 window = Tk()
 window.title("Minesweeper")
 # Add this in once i make an icon --> window.iconbitmap('file path')
