@@ -91,6 +91,14 @@ class Game:
             print(output)
             i_row += 1
 
+    def get_position(self, row, col):
+        if self.flags[row][col] is True:
+            return 'F'
+        elif self.mask[row][col] is True:
+            return self.board[row][col]
+        else:
+            return '#'
+
     def reveal_position(self, row, col):
         if self.board[row][col] is 0 and self.mask[row][col] is False:
             self.mask[row][col] = True
