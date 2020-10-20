@@ -2,7 +2,7 @@ from tkinter import *
 from game import Game
 
 size = 5
-mines = 3
+mines = 5
 buttons = []
 left_or_right = 0   # 0 is left, 1 is right
 
@@ -23,7 +23,7 @@ def setup_board(b, w):
         #button.configure(command=lambda pass_button=button: b_click(w, pass_button))
         #button.bind('Button-1>', left)
         #button.bind('<Button-3>', right)
-        button = Label(window, width=20, height=10, background="gray")
+        button = Label(window, width=8, height=4, background="gray")
         b.insert(0, button)
         count += 1
 
@@ -51,7 +51,7 @@ def update_board(b):
         button.grid(row=row, column=col)
         button['text'] = b.get_position(row, col)
         if button['text'] is 'F':
-            button.config(bg="green")
+            button.config(bg="orange")
         if button ['text'] is 0:
             button.config(bg="white")
         if button['text'] is -1:
