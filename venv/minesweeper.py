@@ -2,17 +2,10 @@ from tkinter import *
 from game import Game
 
 size = 5
-mines = 5
+mines = 3
 buttons = []
 left_or_right = 0   # 0 is left, 1 is right
 
-def left(event):
-    left_or_right = 0
-    print("clicked at", event.x, event.y)
-
-
-def right(event):
-    left_or_right = 1
 
 def start_game(game_size, mines_num):
     b = Game(game_size)
@@ -26,10 +19,11 @@ def start_game(game_size, mines_num):
 def setup_board(b, w):
     count = 0
     for button in range(size * 5):
-        button = Button(window, text=" ", font=("Helvetica", 20), height=3, width=6, bg="SystemButtonFace")
-        button.configure(command=lambda pass_button=button: b_click(w, pass_button))
-        button.bind('Button-1>', left)
-        button.bind('<Button-3>', right)
+        #button = Button(window, text=" ", font=("Helvetica", 20), height=3, width=6, bg="SystemButtonFace")
+        #button.configure(command=lambda pass_button=button: b_click(w, pass_button))
+        #button.bind('Button-1>', left)
+        #button.bind('<Button-3>', right)
+        button = Label(window, width=10, height=10, background="gray")
         b.insert(0, button)
         count += 1
 
@@ -41,6 +35,9 @@ def setup_board(b, w):
             row += 1
         button.grid(row=row, column=col)
         button['text'] = w.get_position(row, col)
+        button.bind("<Button-1>", lambda event, row_num=row, col_num=col: left(event, row_num, col_num, w))
+        button.bind("<Button-2>", lambda event, row_num=row, col_num=col: right(event, row_num, col_num, w))
+        button.bind("<Button-3>", lambda event, row_num=row, col_num=col: right(event, row_num, col_num, w))
         col += 1
 
 
@@ -56,6 +53,19 @@ def update_board(b):
         col += 1
 
 
+def left(event, row, col, game_board):
+    print(row, col)
+    print("clicked at", event.x, event.y)
+    game_board.reveal_position(row, col)
+    update_board(game_board)
+
+
+def right(event, row, col, game_board):
+    print(row, col)
+    print("clicked at", event.x, event.y)
+    game_board.set_flag_location(row, col)
+    update_board(game_board)
+
 # Button clicked function
 def b_click(game_board, button):
     b_row = button.grid_info()['row']
@@ -66,7 +76,6 @@ def b_click(game_board, button):
     else:
         game_board.set_flag_location(b_row, b_col)
         update_board(game_board)
-
 
 board = start_game(size, mines)
 window = Tk()
