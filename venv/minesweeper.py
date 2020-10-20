@@ -50,6 +50,12 @@ def update_board(b):
             row += 1
         button.grid(row=row, column=col)
         button['text'] = b.get_position(row, col)
+        if button['text'] is 'F':
+            button.config(bg="green")
+        if button ['text'] is 0:
+            button.config(bg="white")
+        if button['text'] is -1:
+            button.config(bg="red")
         col += 1
 
 
