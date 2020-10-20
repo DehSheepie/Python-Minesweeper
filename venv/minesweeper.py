@@ -23,7 +23,7 @@ def setup_board(b, w):
         #button.configure(command=lambda pass_button=button: b_click(w, pass_button))
         #button.bind('Button-1>', left)
         #button.bind('<Button-3>', right)
-        button = Label(window, width=10, height=10, background="gray")
+        button = Label(window, width=20, height=10, background="gray")
         b.insert(0, button)
         count += 1
 
@@ -63,8 +63,9 @@ def left(event, row, col, game_board):
 def right(event, row, col, game_board):
     print(row, col)
     print("clicked at", event.x, event.y)
-    game_board.set_flag_location(row, col)
+    game_board.toggle_flag_location(row, col)
     update_board(game_board)
+
 
 # Button clicked function
 def b_click(game_board, button):
@@ -74,8 +75,9 @@ def b_click(game_board, button):
         game_board.reveal_position(b_row, b_col)
         update_board(game_board)
     else:
-        game_board.set_flag_location(b_row, b_col)
+        game_board.toggle_flag_location(b_row, b_col)
         update_board(game_board)
+
 
 board = start_game(size, mines)
 window = Tk()

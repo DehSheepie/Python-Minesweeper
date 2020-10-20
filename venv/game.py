@@ -114,5 +114,8 @@ class Game:
         else:
             self.mask[row][col] = True
 
-    def set_flag_location(self, row, col):
-        self.flags[row][col] = True
+    def toggle_flag_location(self, row, col):
+        if self.flags[row][col] is True:
+            self.flags[row][col] = False
+        else:
+            self.flags[row][col] = True
