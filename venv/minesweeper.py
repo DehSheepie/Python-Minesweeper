@@ -55,9 +55,9 @@ class GameWindow:
             button['text'] = self.game.get_position(row, col)
             if button['text'] is 'F':
                 button.config(bg="orange")
-            if button['text'] is 0:
+            elif button['text'] is 0:
                 button.config(bg="white")
-            if button['text'] is -1:
+            elif button['text'] is -1:
                 button.config(bg="red")
             else:
                 button.config(bg="gray")
