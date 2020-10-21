@@ -15,13 +15,22 @@ def create_mask(size):
 
 
 class Game:
+    #   List of the 8 potential adjacent spaces
     positions = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]]
 
     def __init__(self, size):
         self.board = create_board(size)  # The actual game board used by the program
         self.mask = create_mask(size)  # What the player sees
         self.flags = create_mask(size)  # Array where the player can add mine flags
-        #   List of the 8 potential adjacent spaces
+        self.game_over = False
+        self.success = False
+
+    def reset_game(self, size, mines):
+        self.board = create_board(size)
+        self.mask = create_mask(size)
+        self.flags = create_mask(size)
+        self.add_mines(mines)
+        self.board_setup()
 
     # Adds mines to the board. Takes the array and the number of mines to add
     def add_mines(self, n):

@@ -59,6 +59,8 @@ class GameWindow:
                 button.config(bg="white")
             if button['text'] is -1:
                 button.config(bg="red")
+            else:
+                button.config(bg="gray")
             col += 1
 
     def create_menu(self):
@@ -91,7 +93,7 @@ class GameWindow:
         window.config(menu=menu)
 
     def restart_game(self):
-        #self.start_game()
+        self.game.reset_game(self.size, self.mines)
         self.update_board()
 
     # Left click
