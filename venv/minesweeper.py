@@ -41,8 +41,20 @@ class GameWindow:
             col += 1
 
     def hint(self):
-        self.game.get_hint()
-        self.update_board()
+        if self.game.get_hint():
+            self.update_board()
+        else:
+            popup = Toplevel(self.window)
+            popup.geometry("200x100")
+            popup.title("Sorry")
+
+            label = Label(popup, text="Could not find a hint.")
+            label.pack(pady=10, padx=10)
+
+            okay = Button(popup, text="Okay", command=popup.destroy)
+            okay.pack(pady=20)
+
+
 
     def update_board(self):
         row = 0
@@ -156,7 +168,6 @@ class GameWindow:
 board = GameWindow()
 board.setup_board()
 board.create_menu()
-
 # Add this in once i make an icon --> window.iconbitmap('file path')
 
 board.window.mainloop()

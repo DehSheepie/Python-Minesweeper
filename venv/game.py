@@ -142,6 +142,9 @@ class Game:
             i = randrange(len(hint_locations))
             print(hint_locations)
             self.reveal_position(hint_locations[i][0], hint_locations[i][1])
+            return True
+        else:
+            return False
 
     def toggle_flag_location(self, row, col):
         if self.flags[row][col] is True:
