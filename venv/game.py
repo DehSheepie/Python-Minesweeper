@@ -125,6 +125,24 @@ class Game:
         else:
             self.mask[row][col] = True
 
+    def get_hint(self):
+
+        hint_locations = []
+        i_row = 0
+        i_col = 0
+        for row in self.board:
+            i_col = 0
+            for col in row:
+                if col is 0:
+                    hint_locations.append([i_row, i_col])
+                i_col += 1
+            i_row += 1
+
+        if hint_locations:
+            i = randrange(len(hint_locations))
+            print(hint_locations)
+            self.reveal_position(hint_locations[i][0], hint_locations[i][1])
+
     def toggle_flag_location(self, row, col):
         if self.flags[row][col] is True:
             self.flags[row][col] = False

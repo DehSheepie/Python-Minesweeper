@@ -2,8 +2,6 @@ from tkinter import *
 from game import Game
 
 
-
-
 class GameWindow:
     def __init__(self):
         self.window = Tk()
@@ -42,6 +40,10 @@ class GameWindow:
             button.bind("<Button-3>", lambda event, row_num=row, col_num=col: self.right(event, row_num, col_num))
             col += 1
 
+    def hint(self):
+        self.game.get_hint()
+        self.update_board()
+
     def update_board(self):
         row = 0
         col = 0
@@ -68,7 +70,7 @@ class GameWindow:
         game_menu = Menu(menu, tearoff=0)
         game_menu.add_command(label='Restart', command=self.restart_game)
         game_menu.add_command(label='Auto-hint')
-        game_menu.add_command(label='Hint')
+        game_menu.add_command(label='Hint', command=self.hint)
 
         # Set up difficulty menu
         difficulty_menu = Menu(menu, tearoff=0)
@@ -92,7 +94,7 @@ class GameWindow:
 
     def set_difficulty_hard(self):
         self.size = 10
-        self.mines = 35
+        self.mines = 15
         for widget in self.window.winfo_children():
             widget.destroy()
         self.create_menu()
@@ -105,8 +107,8 @@ class GameWindow:
         self.setup_board()
 
     def set_difficulty_medium(self):
-        self.size = 5
-        self.mines = 10
+        self.size = 7
+        self.mines = 9
         for widget in self.window.winfo_children():
             widget.destroy()
         self.create_menu()
