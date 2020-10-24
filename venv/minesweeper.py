@@ -43,18 +43,21 @@ class GameWindow:
     def hint(self):
         if self.game.get_hint():
             self.update_board()
-        else:
-            popup = Toplevel()
-            popup.geometry("200x100")
-            popup.title("Sorry")
+            return True
 
-            label = Label(popup, text="Could not find a hint.")
-            label.pack(pady=10, padx=10)
+        popup = Toplevel()
+        popup.geometry("200x100")
+        popup.title("Sorry")
 
-            okay = Button(popup, text="Okay", command=popup.destroy)
-            okay.pack(pady=20)
+        label = Label(popup, text="Could not find a hint.")
+        label.pack(pady=10, padx=10)
 
-            popup.lift(self.window)
+        okay = Button(popup, text="Okay", command=popup.destroy)
+        okay.pack(pady=20)
+
+        popup.lift(self.window)
+
+        return False
 
     def update_board(self):
         row = 0
@@ -156,6 +159,9 @@ class GameWindow:
 
     def restart_game(self):
         self.game.reset_game(self.size, self.mines)
+        if self.auto_hint:
+            if not self.hint():
+                self.update_board()
         self.update_board()
 
     # Left click
