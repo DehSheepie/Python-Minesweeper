@@ -19,11 +19,14 @@ class Game:
     positions = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]]
 
     def __init__(self, size):
+        self.spaces = (size * size)
+        self.number_of_mines = 0
         self.board = create_board(size)  # The actual game board used by the program
         self.mask = create_mask(size)  # What the player sees
         self.flags = create_mask(size)  # Array where the player can add mine flags
         self.game_over = False
         self.success = False
+        self.size = size
 
     def reset_game(self, size, mines):
         self.board = create_board(size)
@@ -31,10 +34,12 @@ class Game:
         self.flags = create_mask(size)
         self.add_mines(mines)
         self.board_setup()
+        self.game_over = False
 
     # Adds mines to the board. Takes the array and the number of mines to add
     def add_mines(self, n):
         size = len(self.board)
+        mine_num = n
         # Continues the loop for the number of mines to be added
         while n > 0:
             find_new_mine_location = 3  # Number of attempts the program will make at finding a free location
@@ -48,6 +53,17 @@ class Game:
                     print(f"Mine already in position {x}, {y}")
                     find_new_mine_location -= 1
             n -= 1
+        self.number_of_mines = mine_num
+
+    def check_success(self):
+        count = 0
+        for row in self.mask:
+            for col in row:
+                if col is True:
+                    count += 1
+        if count >= self.spaces - self.number_of_mines:
+            self.success = True
+            self.reveal_all()
 
     # Sets up the board and assigns the appropriate numbers to each space
     def board_setup(self):
@@ -122,8 +138,14 @@ class Game:
         elif self.board[row][col] is -1:
             self.mask[row][col] = True
             print("Game over")
+            self.game_over = True
+            self.reveal_all()
         else:
             self.mask[row][col] = True
+        self.check_success()
+
+    def reveal_all(self):
+        self.mask = [[True] * self.size for n in range(self.size)]
 
     def get_hint(self):
 
