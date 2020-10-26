@@ -88,8 +88,8 @@ class GameWindow:
                 label = Label(popup, text="You clicked on a mine. It is game over.")
                 label.pack(pady=5, padx=10)
 
-                okay = Button(popup, text="Okay", command=lambda: [popup.destroy(), self.restart_game()])
-                okay.pack(pady=5)
+                restart = Button(popup, text="Restart", command=lambda: [popup.destroy(), self.restart_game()])
+                restart.pack(pady=5)
 
                 popup.lift(self.window)
             else:
@@ -100,8 +100,8 @@ class GameWindow:
                 label = Label(popup, text="You found all the clear spaces. You win!")
                 label.pack(pady=5, padx=10)
 
-                okay = Button(popup, text="Okay", command=lambda: [popup.destroy(), self.restart_game()])
-                okay.pack(pady=5)
+                restart = Button(popup, text="Restart", command=lambda: [popup.destroy(), self.restart_game()])
+                restart.pack(pady=5)
 
                 popup.lift(self.window)
 
