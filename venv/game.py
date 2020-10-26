@@ -61,7 +61,8 @@ class Game:
             for col in row:
                 if col is True:
                     count += 1
-        if count >= self.spaces - self.number_of_mines:
+        if not self.game_over and count >= self.spaces - self.number_of_mines:
+            self.game_over = True
             self.success = True
             self.reveal_all()
 
@@ -137,12 +138,13 @@ class Game:
                         self.mask[row + position[0]][col + position[1]] = True
         elif self.board[row][col] is -1:
             self.mask[row][col] = True
-            print("Game over")
             self.game_over = True
+            self.check_success()
             self.reveal_all()
         else:
             self.mask[row][col] = True
-        self.check_success()
+            self.check_success()
+
 
     def reveal_all(self):
         self.mask = [[True] * self.size for n in range(self.size)]

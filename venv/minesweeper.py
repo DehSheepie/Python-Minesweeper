@@ -78,6 +78,34 @@ class GameWindow:
                 button.config(bg="gray")
             col += 1
 
+    def check_game_over(self):
+        if self.game.game_over:
+            if self.game.success is False:
+                popup = Toplevel()
+                popup.geometry("250x80")
+                popup.title("Oh no!")
+
+                label = Label(popup, text="You clicked on a mine. It is game over.")
+                label.pack(pady=5, padx=10)
+
+                okay = Button(popup, text="Okay", command=lambda: [popup.destroy(), self.restart_game()])
+                okay.pack(pady=5)
+
+                popup.lift(self.window)
+            else:
+                popup = Toplevel()
+                popup.geometry("250x80")
+                popup.title("Well done!")
+
+                label = Label(popup, text="You found all the clear spaces. You win!")
+                label.pack(pady=5, padx=10)
+
+                okay = Button(popup, text="Okay", command=lambda: [popup.destroy(), self.restart_game()])
+                okay.pack(pady=5)
+
+                popup.lift(self.window)
+
+
     def create_menu(self):
         menu = Menu(self.window, tearoff=0)
 
@@ -170,6 +198,7 @@ class GameWindow:
         print("clicked at", event.x, event.y)
         self.game.reveal_position(row, col)
         self.update_board()
+        self.check_game_over()
 
     # Right click
     def right(self, event, row, col):
