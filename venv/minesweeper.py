@@ -6,7 +6,7 @@ class GameWindow:
     def __init__(self):
         self.auto_hint = True
         self.window = Tk()
-        self.mines = 5
+        self.mines = 3
         self.size = 4
         self.window.title("Minesweeper")
         self.create_menu()
@@ -105,7 +105,6 @@ class GameWindow:
 
                 popup.lift(self.window)
 
-
     def create_menu(self):
         menu = Menu(self.window, tearoff=0)
 
@@ -173,7 +172,7 @@ class GameWindow:
 
     def set_difficulty_easy(self):
         self.size = 4
-        self.mines = 5
+        self.mines = 3
         for widget in self.window.winfo_children():
             widget.destroy()
         self.create_menu()
