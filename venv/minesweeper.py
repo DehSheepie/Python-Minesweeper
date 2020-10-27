@@ -155,7 +155,6 @@ class GameWindow:
         self.game.console_display_mask()
         self.setup_board()
 
-
     def set_difficulty_medium(self):
         self.size = 7
         self.mines = 9
@@ -217,5 +216,4 @@ board = GameWindow()
 board.setup_board()
 board.create_menu()
 # Add this in once i make an icon --> window.iconbitmap('file path')
-
 board.window.mainloop()
