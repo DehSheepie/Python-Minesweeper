@@ -1,7 +1,5 @@
 from random import randrange
 
-# TODO: Look into whether the auto-clear is OP
-
 
 # Set up array
 def create_board(size):
