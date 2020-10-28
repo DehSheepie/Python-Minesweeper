@@ -19,11 +19,13 @@ class GameWindow:
 
     # Sets up the minesweeper window
     def setup_board(self):
+        # Creates a button for every space and adds it to the start of the buttons array
         for button in range(self.size * self.size):
             button = Label(self.window, width=8, height=4, background="gray")
             self.buttons.insert(0, button)
         row = 0
         col = 0
+        # Loops through the buttons array and aligns and sets up each of the labels
         for button in self.buttons:
             if col >= self.size:
                 col = 0
@@ -34,10 +36,10 @@ class GameWindow:
             button.bind("<Button-2>", lambda event, row_num=row, col_num=col: self.right(event, row_num, col_num))
             button.bind("<Button-3>", lambda event, row_num=row, col_num=col: self.right(event, row_num, col_num))
             col += 1
-
         if self.auto_hint:
             self.hint()
 
+    # Checks whether a hint could be found and returns a popup message if one couldn't be
     def hint(self):
         if self.game.get_hint():
             self.update_board()
@@ -61,6 +63,8 @@ class GameWindow:
         row = 0
         col = 0
         for button in self.buttons:
+            # col increments each time the for loop is iterated through
+            # If col exceeds the size of a row the col number is reset to 0 and the row number is incremented
             if col >= self.size:
                 col = 0
                 row += 1
@@ -76,6 +80,7 @@ class GameWindow:
                 button.config(bg="gray")
             col += 1
 
+    # Shows a popup message depending on whether the game is won or not
     def check_game_over(self):
         if self.game.game_over:
             if self.game.success is False:
