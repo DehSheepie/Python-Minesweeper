@@ -17,13 +17,11 @@ class GameWindow:
         self.game.console_display_board()
         self.game.console_display_mask()
 
+    # Sets up the minesweeper window
     def setup_board(self):
-        count = 0
         for button in range(self.size * self.size):
             button = Label(self.window, width=8, height=4, background="gray")
             self.buttons.insert(0, button)
-            count += 1
-
         row = 0
         col = 0
         for button in self.buttons:
