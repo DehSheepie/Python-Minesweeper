@@ -1,6 +1,8 @@
 from random import randrange
 
 
+# TODO: Fix error with the hint system so that redundant hints aren't given
+
 # Set up array
 def create_board(size):
     b = [[0] * size for n in range(size)]
@@ -44,7 +46,7 @@ class Game:
             while find_new_mine_location > 0:
                 x = randrange(size)
                 y = randrange(size)
-                if self.board[x][y] is not -1:
+                if self.board[x][y] != -1:
                     self.board[x][y] = -1  # Currently using -1 to signify mines
                     find_new_mine_location = 0
                 else:
@@ -71,7 +73,7 @@ class Game:
         for row in self.board:
             i_col = 0
             for col in row:
-                if col is not -1:
+                if col != -1:
                     self.board[i_row][i_col] = self.calculate_mine_proximity(i_row, i_col)
                 i_col += 1
             i_row += 1
@@ -82,7 +84,7 @@ class Game:
         size = len(self.board)
         for position in self.positions:
             if self.check_in_board_bounds(row + position[0], col + position[1]):
-                if self.board[row + position[0]][col + position[1]] is -1:
+                if self.board[row + position[0]][col + position[1]] == -1:
                     value += 1
         return value
 
@@ -108,9 +110,9 @@ class Game:
             i_col = 0
             output = self.board[i_row].copy()
             for col in row:
-                if col is False:
+                if not col:
                     output[i_col] = '#'
-                elif self.flags[i_row][i_col] is True:
+                elif self.flags[i_row][i_col]:
                     output[i_col] = 'F'
                 i_col += 1
             output = str(output).replace('\'', '')
@@ -118,23 +120,23 @@ class Game:
             i_row += 1
 
     def get_position(self, row, col):
-        if self.flags[row][col] is True:
+        if self.flags[row][col]:
             return 'F'
-        elif self.mask[row][col] is True:
+        elif self.mask[row][col]:
             return self.board[row][col]
         else:
             return '#'
 
     def reveal_position(self, row, col):
-        if self.board[row][col] is 0 and self.mask[row][col] is False:
+        if self.board[row][col] == 0 and not self.mask[row][col]:
             self.mask[row][col] = True
             for position in self.positions:
                 if self.check_in_board_bounds(row + position[0], col + position[1]):
-                    if self.board[row + position[0]][col + position[1]] is 0:
+                    if self.board[row + position[0]][col + position[1]] == 0:
                         self.reveal_position(row + position[0], col + position[1])
                     else:
                         self.mask[row + position[0]][col + position[1]] = True
-        elif self.board[row][col] is -1:
+        elif self.board[row][col] == -1:
             self.mask[row][col] = True
             self.game_over = True
             self.check_success()
@@ -142,7 +144,6 @@ class Game:
         else:
             self.mask[row][col] = True
             self.check_success()
-
 
     def reveal_all(self):
         self.mask = [[True] * self.size for n in range(self.size)]
@@ -155,7 +156,7 @@ class Game:
         for row in self.board:
             i_col = 0
             for col in row:
-                if col is 0:
+                if col == 0:
                     hint_locations.append([i_row, i_col])
                 i_col += 1
             i_row += 1
@@ -169,7 +170,7 @@ class Game:
             return False
 
     def toggle_flag_location(self, row, col):
-        if self.flags[row][col] is True:
+        if self.flags[row][col]:
             self.flags[row][col] = False
         else:
             self.flags[row][col] = True
